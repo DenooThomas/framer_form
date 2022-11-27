@@ -44,7 +44,7 @@ const useStyles = createUseStyles({
   note: {
     backgroundColor: '#23232D',
     fontSize: '0.9rem',
-    padding: 10,
+    padding: '15px 25px',
     margin: '10px 0 20px',
     borderRadius: '0.6rem',
     maxWidth: '100%',
@@ -80,8 +80,17 @@ const noteVariants = {
     scale: 0,
     transition: {
       type: 'tween',
-      duration: 0.3,
+      duration: 0.2,
     },
+  },
+};
+
+const buttonVariants = {
+  hover: {
+    scale: 1.1,
+  },
+  tap: {
+    scale: 0.9,
   },
 };
 
@@ -98,6 +107,12 @@ function SignUp() {
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [isValidPassword, setIsValidPassword] = useState(false);
 
+  const [isFailed] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log('test');
+  }
   useEffect(() => {
     const result = USER_REGEX.test(username);
     setIsValidUsername(result);
@@ -114,6 +129,7 @@ function SignUp() {
   const classes = useStyles();
   return (
     <motion.form
+      onSubmit={handleSubmit}
       className={classes.form}
       variants={containerVariants}
       initial="hidden"
@@ -136,23 +152,23 @@ function SignUp() {
         />
       </label>
       <AnimatePresence>
-        {usernameFocus && username && !isValidUsername
-      && (
-      <motion.ul
-        key="usernamenote"
-        className={classes.note}
-        variants={noteVariants}
-      >
-        <li>4 to 24 characters.</li>
-        <li>Must begin with a letter.</li>
-        <li>
-          <b>Letters, numbers, _ </b>
-          and
-          <b> - </b>
-          allowed
-        </li>
-      </motion.ul>
-      )}
+        {((usernameFocus && username && !isValidUsername) || isFailed) && (
+        <motion.ul
+          key="usernamenote"
+          className={classes.note}
+          variants={noteVariants}
+          exit="exit"
+        >
+          <li>4 to 24 characters.</li>
+          <li>Must begin with a letter.</li>
+          <li>
+            <b>Letters, numbers, _ </b>
+            and
+            <b> - </b>
+            allowed
+          </li>
+        </motion.ul>
+        )}
       </AnimatePresence>
 
       <label className={classes.label} htmlFor="password">
@@ -169,11 +185,12 @@ function SignUp() {
         />
       </label>
       <AnimatePresence>
-        {passwordFocus && password && !isValidPassword && (
+        {((passwordFocus && password && !isValidPassword) || isFailed) && (
         <motion.p
           key="passwordnote"
           className={classes.note}
           variants={noteVariants}
+          exit="exit"
         >
           8 to 24 characters.
           <br />
@@ -184,17 +201,25 @@ function SignUp() {
         </motion.p>
         )}
       </AnimatePresence>
-
       <label className={classes.label} htmlFor="email">
         Email
         <input
           className={classes.input}
           type="email"
           id="email"
+          required
         />
       </label>
 
-      <button type="button" className={classes.button}>Sign up</button>
+      <motion.button
+        type="submit"
+        className={classes.button}
+        variants={buttonVariants}
+        whileHover="hover"
+        whileTap="tap"
+      >
+        Sign up
+      </motion.button>
     </motion.form>
   );
 }

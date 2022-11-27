@@ -30,7 +30,7 @@ const useStyles = createUseStyles({
     borderRadius: '0.6rem',
   },
   button: {
-    color: colors.black,
+    color: colors.grey,
     fontSize: '1.4rem',
     border: 'none',
     backgroundColor: colors.orange,
@@ -54,6 +54,15 @@ const containerVariants = {
   },
 };
 
+const buttonVariants = {
+  hover: {
+    scale: 1.1,
+  },
+  tap: {
+    scale: 0.9,
+  },
+};
+
 function Login() {
   const classes = useStyles();
   return (
@@ -73,7 +82,15 @@ function Login() {
         Password
         <input className={classes.input} type="password" id="password" />
       </label>
-      <button type="button" className={classes.button}>Login</button>
+      <motion.button
+        type="button"
+        className={classes.button}
+        variants={buttonVariants}
+        whileHover="hover"
+        whileTap="tap"
+      >
+        Login
+      </motion.button>
     </motion.form>
   );
 }

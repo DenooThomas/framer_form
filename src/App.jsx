@@ -11,7 +11,7 @@ import Login from './pages/Login/Login';
 
 const useStyles = createUseStyles({
   wrapper: {
-    ...flexColumn('nowrap', 'space-around', 'center'),
+    ...flexColumn('nowrap', 'flex-start', 'center'),
     minHeight: '100vh',
     backgroundColor: colors.darkblue,
     color: colors.orange,
