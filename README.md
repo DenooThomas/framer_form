@@ -4,7 +4,7 @@
 Registration and login form with Framer Motion animations.
 
 ## Demo
-### Live demo: framer-form.vercel.app
+### Live demo: https://framer-form.vercel.app/
 
 ## Installation
 
